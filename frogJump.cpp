@@ -7,7 +7,7 @@ int diff(int a,int b){
 }
 
 // bottom-up approach 
-int countValue1(vector<int> arr,int n,vector<int> val){
+int countValue1(vector<int> &arr,int n,vector<int> &val){
     if(n==0 || n==1){
         return val[n];
     }
@@ -22,7 +22,7 @@ int countValue1(vector<int> arr,int n,vector<int> val){
 }
 
 // top-down approach
-int countValue2(vector<int> arr,int n,vector<int> val){
+int countValue2(vector<int> &arr,int n,vector<int> &val){
     if(n==0 || n==1){
         return val[n];
     }
@@ -35,12 +35,29 @@ int countValue2(vector<int> arr,int n,vector<int> val){
     return val[n];
 }
 
-int frogJump(vector<int> arr, int n ){
-    vector<int> val(n,0);
-    val[1]=diff(arr[0],arr[1]);
-    // int ans = countValue1(arr,n-1,val);
-    int ans = countValue2(arr,n-1,val);
+//space optimization 
+int countValue3(vector<int> &arr,int n){
+    if(n==0 || n==1){
+        return diff(arr[0],arr[n]);
+    }
+    int prev1=diff(arr[0],arr[1]);
+    int prev2=0,ans=0;
+    for(int i=2;i<=n;i++){
+        int val1=prev2+diff(arr[i-2],arr[i]);
+        int val2=prev1+diff(arr[i-1],arr[i]);
+        ans=min(val1,val2);
+        prev2=prev1;
+        prev1=ans;
+    }
+    return ans;
+}
 
+int frogJump(vector<int> &arr, int n ){
+    // vector<int> val(n,0);
+    // val[1]=diff(arr[0],arr[1]);
+    // int ans = countValue1(arr,n-1,val);
+    // int ans = countValue2(arr,n-1,val);
+    int ans = countValue3(arr,n-1);
     return ans;
 }
 
