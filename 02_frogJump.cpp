@@ -1,3 +1,4 @@
+// We have calculate minimum energy require for a frog to react the last element.  
 #include <iostream>
 #include <vector>
 using namespace std;
